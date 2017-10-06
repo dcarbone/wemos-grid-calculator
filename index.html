@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>4x4 grid</title>
+    <title>8x8 grid</title>
     <style rel="tex/css">
         td {
             height: 36px;
@@ -134,14 +134,14 @@
             </tr>
             <tr id="hexadecimals">
                 <th></th>
-                <td class="hexadecimal">0x00</td>
-                <td class="hexadecimal">0x00</td>
-                <td class="hexadecimal">0x00</td>
-                <td class="hexadecimal">0x00</td>
-                <td class="hexadecimal">0x00</td>
-                <td class="hexadecimal">0x00</td>
-                <td class="hexadecimal">0x00</td>
-                <td class="hexadecimal">0x00</td>
+                <td class="hexadecimal">0x0</td>
+                <td class="hexadecimal">0x0</td>
+                <td class="hexadecimal">0x0</td>
+                <td class="hexadecimal">0x0</td>
+                <td class="hexadecimal">0x0</td>
+                <td class="hexadecimal">0x0</td>
+                <td class="hexadecimal">0x0</td>
+                <td class="hexadecimal">0x0</td>
             </tr>
         </tbody>
         <thead>
@@ -158,8 +158,38 @@
             </tr>
         </thead>
     </table>
+    <div>
+        <button id="cleargrid">Clear</button>
+        <button id="fillgrid">Fill</button>
+        <button id="invertgrid">Invert</button>
+    </div>
     <script type="text/javascript">
-        var valueNodes = function() {
+        var pixelNodes = function() {
+            var nodes = [];
+            var table = document.getElementById('grid');
+            var tbody, tr, td;
+            var ti, tbi, tri, tdi;
+            for (ti = 0; ti < table.children.length; ti++){
+                if ('tbody' === table.children[ti].nodeName.toLowerCase()) {
+                    tbody = table.children[ti];
+                    for (tbi = 0; tbi < tbody.children.length; tbi++) {
+                        if ('tr' === tbody.children[tbi].nodeName.toLowerCase()) {
+                            tr = tbody.children[tbi];
+                            for (tri = 0; tri < tr.children.length; tri++) {
+                                if ('td' === tr.children[tri].nodeName.toLowerCase()) {
+                                    td = tr.children[tri];
+                                    if (td.hasAttribute('class') && td.getAttribute('class').match('pixel')) {
+                                        nodes.push(td);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return nodes;
+        }();
+        var hexNodes = function() {
             var tr = document.getElementById('hexadecimals');
             var column = 0;
             var columns = [];
@@ -175,12 +205,12 @@
             dot.setAttribute('class', 'dot');
             return dot;
         }
-        function updateHex(el) {
-            var row, pixel, dot, x, y, hexNode, current, updated;
+        function togglePixel(el) {
+            var row, pixel, dot, x, y, hexNode, current, updated, parent;
             switch (el.nodeName.toLowerCase()) {
                 case 'span':
                     dot = el;
-                    var parent = el.parentNode;
+                    parent = el.parentNode;
                     while (parent !== null) {
                         if (parent.nodeName.toLowerCase() === 'td' && parent.hasAttribute('data-x')) {
                             pixel = parent;
@@ -192,8 +222,8 @@
                     pixel = el;
                     for (var i = 0; i < el.children.length; i++) {
                         if (el.children[i].hasAttribute('class') && el.children[i].getAttribute('class').match('dot')) {
-                           dot = el.children[i];
-                           break;
+                            dot = el.children[i];
+                            break;
                         }
                     }
                     break;
@@ -209,7 +239,7 @@
                 x = parseInt(pixel.getAttribute('data-x'), 10);
             }
 
-            var parent = pixel.parentNode;
+            parent = pixel.parentNode;
             while (null !== parent) {
                 if ('tr' === parent.nodeName.toLowerCase() && parent.hasAttribute('data-y')) {
                     row = parent;
@@ -223,12 +253,12 @@
                 y = parseInt(row.getAttribute('data-y'), 10);
             }
 
-            if ('undefined' === typeof valueNodes[y]) {
+            if ('undefined' === typeof hexNodes[y]) {
                 alert('Unable to locate valuenode for ' + y);
                 return;
             }
 
-            hexNode = valueNodes[y];
+            hexNode = hexNodes[y];
             current = parseInt(hexNode.innerText, 16);
 
             if (undefined === dot || null === dot) {
@@ -244,9 +274,44 @@
             if (1 !== e.which || !e.target.hasAttribute('class') || (!e.target.getAttribute('class').match('pixel') && !e.target.getAttribute('class').match('dot'))) {
                 return;
             }
-            updateHex(e.target);
-            return;
+            togglePixel(e.target);
         });
+        document.getElementById('cleargrid').addEventListener('mousedown', function(e) {
+            if (1 !== e.which) {
+                return;
+            }
+            loop:
+                for (var i = 0; i < pixelNodes.length; i++) {
+                    for (var ii = 0; ii < pixelNodes[i].children.length; ii++) {
+                        if ('span' === pixelNodes[i].children[ii].nodeName.toLowerCase()) {
+                            togglePixel(pixelNodes[i]);
+                            continue loop;
+                        }
+                    }
+                }
+        });
+        document.getElementById('fillgrid').addEventListener('mousedown', function(e) {
+            if (1 !== e.which) {
+                return;
+            }
+            loop:
+                for (var i = 0; i < pixelNodes.length; i++) {
+                    for (var ii = 0; ii < pixelNodes[i].children.length; ii++) {
+                        if ('span' === pixelNodes[i].children[ii].nodeName.toLowerCase()) {
+                            continue loop;
+                        }
+                    }
+                    togglePixel(pixelNodes[i]);
+                }
+        });
+        document.getElementById('invertgrid').addEventListener('mousedown', function(e) {
+            if (1 !== e.which) {
+                return;
+            }
+            for (var i = 0; i < pixelNodes.length; i++) {
+                togglePixel(pixelNodes[i]);
+            }
+        })
     </script>
 </body>
 </html>
