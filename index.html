@@ -229,7 +229,7 @@
                     break;
             }
             if (undefined === pixel || null === pixel) {
-                alert('Unable to lcoate pixel!');
+                alert('Unable to locate pixel!');
                 return;
             }
             if (!pixel.hasAttribute('data-x')) {
@@ -245,6 +245,7 @@
                     row = parent;
                     break;
                 }
+                parent = parent.parentNode;
             }
             if (undefined === row || null === row) {
                 alert('Unable to locate row!');
@@ -254,7 +255,7 @@
             }
 
             if ('undefined' === typeof hexNodes[y]) {
-                alert('Unable to locate valuenode for ' + y);
+                alert('Unable to locate hexnode for ' + y);
                 return;
             }
 
@@ -268,6 +269,7 @@
                 pixel.removeChild(dot);
                 updated = (current &=~ (1<<x));
             }
+            // TODO: Don't assume first child is text node...?
             hexNode.firstChild.nodeValue = '0x' + parseInt(updated, 10).toString(16);
         }
         document.getElementById('grid').addEventListener('mousedown', function(e) {
