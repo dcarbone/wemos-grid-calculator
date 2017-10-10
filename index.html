@@ -42,278 +42,276 @@
     </style>
 </head>
 <body>
-    <table id="grid" cellspacing="0" cellpadding="0">
-        <tbody>
-            <tr data-y="7" class="y">
-                <th>7</th>
-                <td data-x="7" class="pixel"></td>
-                <td data-x="6" class="pixel"></td>
-                <td data-x="5" class="pixel"></td>
-                <td data-x="4" class="pixel"></td>
-                <td data-x="3" class="pixel"></td>
-                <td data-x="2" class="pixel"></td>
-                <td data-x="1" class="pixel"></td>
-                <td data-x="0" class="pixel"></td>
-            </tr>
-            <tr data-y="6" class="y">
-                <th>6</th>
-                <td data-x="7" class="pixel"></td>
-                <td data-x="6" class="pixel"></td>
-                <td data-x="5" class="pixel"></td>
-                <td data-x="4" class="pixel"></td>
-                <td data-x="3" class="pixel"></td>
-                <td data-x="2" class="pixel"></td>
-                <td data-x="1" class="pixel"></td>
-                <td data-x="0" class="pixel"></td>
-            </tr>
-            <tr data-y="5" class="y">
-                <th>5</th>
-                <td data-x="7" class="pixel"></td>
-                <td data-x="6" class="pixel"></td>
-                <td data-x="5" class="pixel"></td>
-                <td data-x="4" class="pixel"></td>
-                <td data-x="3" class="pixel"></td>
-                <td data-x="2" class="pixel"></td>
-                <td data-x="1" class="pixel"></td>
-                <td data-x="0" class="pixel"></td>
-            </tr>
-            <tr data-y="4" class="y">
-                <th>4</th>
-                <td data-x="7" class="pixel"></td>
-                <td data-x="6" class="pixel"></td>
-                <td data-x="5" class="pixel"></td>
-                <td data-x="4" class="pixel"></td>
-                <td data-x="3" class="pixel"></td>
-                <td data-x="2" class="pixel"></td>
-                <td data-x="1" class="pixel"></td>
-                <td data-x="0" class="pixel"></td>
-            </tr>
-            <tr data-y="3" class="y">
-                <th>3</th>
-                <td data-x="7" class="pixel"></td>
-                <td data-x="6" class="pixel"></td>
-                <td data-x="5" class="pixel"></td>
-                <td data-x="4" class="pixel"></td>
-                <td data-x="3" class="pixel"></td>
-                <td data-x="2" class="pixel"></td>
-                <td data-x="1" class="pixel"></td>
-                <td data-x="0" class="pixel"></td>
-            </tr>
-            <tr data-y="2" class="y">
-                <th>2</th>
-                <td data-x="7" class="pixel"></td>
-                <td data-x="6" class="pixel"></td>
-                <td data-x="5" class="pixel"></td>
-                <td data-x="4" class="pixel"></td>
-                <td data-x="3" class="pixel"></td>
-                <td data-x="2" class="pixel"></td>
-                <td data-x="1" class="pixel"></td>
-                <td data-x="0" class="pixel"></td>
-            </tr>
-            <tr data-y="1" class="y">
-                <th>1</th>
-                <td data-x="7" class="pixel"></td>
-                <td data-x="6" class="pixel"></td>
-                <td data-x="5" class="pixel"></td>
-                <td data-x="4" class="pixel"></td>
-                <td data-x="3" class="pixel"></td>
-                <td data-x="2" class="pixel"></td>
-                <td data-x="1" class="pixel"></td>
-                <td data-x="0" class="pixel"></td>
-            </tr>
-            <tr data-y="0" class="y">
-                <th>0</th>
-                <td data-x="7" class="pixel"></td>
-                <td data-x="6" class="pixel"></td>
-                <td data-x="5" class="pixel"></td>
-                <td data-x="4" class="pixel"></td>
-                <td data-x="3" class="pixel"></td>
-                <td data-x="2" class="pixel"></td>
-                <td data-x="1" class="pixel"></td>
-                <td data-x="0" class="pixel"></td>
-            </tr>
-            <tr id="hexadecimals">
-                <th></th>
-                <td class="hexadecimal">0x0</td>
-                <td class="hexadecimal">0x0</td>
-                <td class="hexadecimal">0x0</td>
-                <td class="hexadecimal">0x0</td>
-                <td class="hexadecimal">0x0</td>
-                <td class="hexadecimal">0x0</td>
-                <td class="hexadecimal">0x0</td>
-                <td class="hexadecimal">0x0</td>
-            </tr>
-        </tbody>
-        <thead>
-            <tr>
-                <th>&nbsp;</th>
-                <th>0</th>
-                <th>1</th>
-                <th>2</th>
-                <th>3</th>
-                <th>4</th>
-                <th>5</th>
-                <th>6</th>
-                <th>7</th>
-            </tr>
-        </thead>
-    </table>
-    <div>
-        <button id="cleargrid">Clear</button>
-        <button id="fillgrid">Fill</button>
-        <button id="invertgrid">Invert</button>
-    </div>
-    <script type="text/javascript">
-        var pixelNodes = function() {
-            var nodes = [];
-            var table = document.getElementById('grid');
-            var tbody, tr, td;
-            var ti, tbi, tri, tdi;
-            for (ti = 0; ti < table.children.length; ti++){
-                if ('tbody' === table.children[ti].nodeName.toLowerCase()) {
-                    tbody = table.children[ti];
-                    for (tbi = 0; tbi < tbody.children.length; tbi++) {
-                        if ('tr' === tbody.children[tbi].nodeName.toLowerCase()) {
-                            tr = tbody.children[tbi];
-                            for (tri = 0; tri < tr.children.length; tri++) {
-                                if ('td' === tr.children[tri].nodeName.toLowerCase()) {
-                                    td = tr.children[tri];
-                                    if (td.hasAttribute('class') && td.getAttribute('class').match('pixel')) {
-                                        nodes.push(td);
-                                    }
+<table id="grid" cellspacing="0" cellpadding="0">
+    <tbody>
+    <tr data-y="7" class="y">
+        <th>7</th>
+        <td data-x="0" class="pixel"></td>
+        <td data-x="1" class="pixel"></td>
+        <td data-x="2" class="pixel"></td>
+        <td data-x="3" class="pixel"></td>
+        <td data-x="4" class="pixel"></td>
+        <td data-x="5" class="pixel"></td>
+        <td data-x="6" class="pixel"></td>
+        <td data-x="7" class="pixel"></td>
+    </tr>
+    <tr data-y="6" class="y">
+        <th>6</th>
+        <td data-x="0" class="pixel"></td>
+        <td data-x="1" class="pixel"></td>
+        <td data-x="2" class="pixel"></td>
+        <td data-x="3" class="pixel"></td>
+        <td data-x="4" class="pixel"></td>
+        <td data-x="5" class="pixel"></td>
+        <td data-x="6" class="pixel"></td>
+        <td data-x="7" class="pixel"></td>
+    </tr>
+    <tr data-y="5" class="y">
+        <th>5</th>
+        <td data-x="0" class="pixel"></td>
+        <td data-x="1" class="pixel"></td>
+        <td data-x="2" class="pixel"></td>
+        <td data-x="3" class="pixel"></td>
+        <td data-x="4" class="pixel"></td>
+        <td data-x="5" class="pixel"></td>
+        <td data-x="6" class="pixel"></td>
+        <td data-x="7" class="pixel"></td>
+    </tr>
+    <tr data-y="4" class="y">
+        <th>4</th>
+        <td data-x="0" class="pixel"></td>
+        <td data-x="1" class="pixel"></td>
+        <td data-x="2" class="pixel"></td>
+        <td data-x="3" class="pixel"></td>
+        <td data-x="4" class="pixel"></td>
+        <td data-x="5" class="pixel"></td>
+        <td data-x="6" class="pixel"></td>
+        <td data-x="7" class="pixel"></td>
+    </tr>
+    <tr data-y="3" class="y">
+        <th>3</th>
+        <td data-x="0" class="pixel"></td>
+        <td data-x="1" class="pixel"></td>
+        <td data-x="2" class="pixel"></td>
+        <td data-x="3" class="pixel"></td>
+        <td data-x="4" class="pixel"></td>
+        <td data-x="5" class="pixel"></td>
+        <td data-x="6" class="pixel"></td>
+        <td data-x="7" class="pixel"></td>
+    </tr>
+    <tr data-y="2" class="y">
+        <th>2</th>
+        <td data-x="0" class="pixel"></td>
+        <td data-x="1" class="pixel"></td>
+        <td data-x="2" class="pixel"></td>
+        <td data-x="3" class="pixel"></td>
+        <td data-x="4" class="pixel"></td>
+        <td data-x="5" class="pixel"></td>
+        <td data-x="6" class="pixel"></td>
+        <td data-x="7" class="pixel"></td>
+    </tr>
+    <tr data-y="1" class="y">
+        <th>1</th>
+        <td data-x="0" class="pixel"></td>
+        <td data-x="1" class="pixel"></td>
+        <td data-x="2" class="pixel"></td>
+        <td data-x="3" class="pixel"></td>
+        <td data-x="4" class="pixel"></td>
+        <td data-x="5" class="pixel"></td>
+        <td data-x="6" class="pixel"></td>
+        <td data-x="7" class="pixel"></td>
+    </tr>
+    <tr data-y="0" class="y">
+        <th>0</th>
+        <td data-x="0" class="pixel"></td>
+        <td data-x="1" class="pixel"></td>
+        <td data-x="2" class="pixel"></td>
+        <td data-x="3" class="pixel"></td>
+        <td data-x="4" class="pixel"></td>
+        <td data-x="5" class="pixel"></td>
+        <td data-x="6" class="pixel"></td>
+        <td data-x="7" class="pixel"></td>
+    </tr>
+    <tr id="hexadecimals">
+        <th></th>
+        <td class="hexadecimal">0x0</td>
+        <td class="hexadecimal">0x0</td>
+        <td class="hexadecimal">0x0</td>
+        <td class="hexadecimal">0x0</td>
+        <td class="hexadecimal">0x0</td>
+        <td class="hexadecimal">0x0</td>
+        <td class="hexadecimal">0x0</td>
+        <td class="hexadecimal">0x0</td>
+    </tr>
+    </tbody>
+    <thead>
+    <tr>
+        <th>&nbsp</th>
+        <th>7</th>
+        <th>6</th>
+        <th>5</th>
+        <th>4</th>
+        <th>3</th>
+        <th>2</th>
+        <th>1</th>
+        <th>0</th>
+    </tr>
+    </thead>
+</table>
+<div>
+    <button id="cleargrid">Clear</button>
+    <button id="fillgrid">Fill</button>
+    <button id="invertgrid">Invert</button>
+</div>
+<script type="text/javascript">
+    var pixelNodes = function() {
+        var nodes = [];
+        var table = document.getElementById('grid');
+        var tbody, tr, td;
+        var ti, tbi, tri, tdi;
+        for (ti = 0; ti < table.children.length; ti++){
+            if ('tbody' === table.children[ti].nodeName.toLowerCase()) {
+                tbody = table.children[ti];
+                for (tbi = 0; tbi < tbody.children.length; tbi++) {
+                    if ('tr' === tbody.children[tbi].nodeName.toLowerCase()) {
+                        tr = tbody.children[tbi];
+                        for (tri = 0; tri < tr.children.length; tri++) {
+                            if ('td' === tr.children[tri].nodeName.toLowerCase()) {
+                                td = tr.children[tri];
+                                if (td.hasAttribute('class') && td.getAttribute('class').match('pixel')) {
+                                    nodes.push(td);
                                 }
                             }
                         }
                     }
                 }
             }
-            return nodes;
-        }();
-        var hexNodes = function() {
-            var tr = document.getElementById('hexadecimals');
-            var column = 0;
-            var columns = [];
-            for (var i = 0; i < tr.children.length; i++) {
-                if ('td' === tr.children[i].nodeName.toLowerCase() && tr.children[i].hasAttribute('class') && tr.children[i].getAttribute('class').match('hexadecimal')) {
-                    columns[column++] = tr.children[i];
-                }
-            }
-            return columns;
-        }();
-        function newDot() {
-            var dot = document.createElement('span');
-            dot.setAttribute('class', 'dot');
-            return dot;
         }
-        function togglePixel(el) {
-            var row, pixel, dot, x, y, hexNode, current, updated, parent;
-            switch (el.nodeName.toLowerCase()) {
-                case 'span':
-                    dot = el;
-                    parent = el.parentNode;
-                    while (parent !== null) {
-                        if (parent.nodeName.toLowerCase() === 'td' && parent.hasAttribute('data-x')) {
-                            pixel = parent;
-                            break;
-                        }
-                    }
-                    break;
-                case 'td':
-                    pixel = el;
-                    for (var i = 0; i < el.children.length; i++) {
-                        if (el.children[i].hasAttribute('class') && el.children[i].getAttribute('class').match('dot')) {
-                            dot = el.children[i];
-                            break;
-                        }
-                    }
-                    break;
+        return nodes;
+    }();
+    var hexNodes = function() {
+        var tr = document.getElementById('hexadecimals');
+        var column = 0;
+        var columns = [];
+        for (var i = 0; i < tr.children.length; i++) {
+            if ('td' === tr.children[i].nodeName.toLowerCase() && tr.children[i].hasAttribute('class') && tr.children[i].getAttribute('class').match('hexadecimal')) {
+                columns[column++] = tr.children[i];
             }
-            if (undefined === pixel || null === pixel) {
-                alert('Unable to locate pixel!');
-                return;
-            }
-            if (!pixel.hasAttribute('data-x')) {
-                alert('Unable to locate "data-x" attribute on <td>!');
-                return;
-            } else {
-                x = parseInt(pixel.getAttribute('data-x'), 10);
-            }
-
-            parent = pixel.parentNode;
-            while (null !== parent) {
-                if ('tr' === parent.nodeName.toLowerCase() && parent.hasAttribute('data-y')) {
-                    row = parent;
-                    break;
-                }
-                parent = parent.parentNode;
-            }
-            if (undefined === row || null === row) {
-                alert('Unable to locate row!');
-                return;
-            } else {
-                y = parseInt(row.getAttribute('data-y'), 10);
-            }
-
-            if ('undefined' === typeof hexNodes[y]) {
-                alert('Unable to locate hexnode for ' + y);
-                return;
-            }
-
-            hexNode = hexNodes[y];
-            current = parseInt(hexNode.innerText, 16);
-
-            if (undefined === dot || null === dot) {
-                pixel.appendChild(newDot());
-                updated = (current | (1<<x));
-            } else {
-                pixel.removeChild(dot);
-                updated = (current &=~ (1<<x));
-            }
-            // TODO: Don't assume first child is text node...?
-            hexNode.firstChild.nodeValue = '0x' + parseInt(updated, 10).toString(16);
         }
-        document.getElementById('grid').addEventListener('mousedown', function(e) {
-            if (1 !== e.which || !e.target.hasAttribute('class') || (!e.target.getAttribute('class').match('pixel') && !e.target.getAttribute('class').match('dot'))) {
-                return;
-            }
-            togglePixel(e.target);
-        });
-        document.getElementById('cleargrid').addEventListener('mousedown', function(e) {
-            if (1 !== e.which) {
-                return;
-            }
-            loop:
-                for (var i = 0; i < pixelNodes.length; i++) {
-                    for (var ii = 0; ii < pixelNodes[i].children.length; ii++) {
-                        if ('span' === pixelNodes[i].children[ii].nodeName.toLowerCase()) {
-                            togglePixel(pixelNodes[i]);
-                            continue loop;
-                        }
+        return columns;
+    }();
+    function newDot() {
+        var dot = document.createElement('span');
+        dot.setAttribute('class', 'dot');
+        return dot;
+    }
+    function togglePixel(el) {
+        var row, pixel, dot, x, y, hexNode, current, updated;
+        switch (el.nodeName.toLowerCase()) {
+            case 'span':
+                dot = el;
+                var parent = el.parentNode;
+                while (parent !== null) {
+                    if (parent.nodeName.toLowerCase() === 'td' && parent.hasAttribute('data-x')) {
+                        pixel = parent;
+                        break;
                     }
                 }
-        });
-        document.getElementById('fillgrid').addEventListener('mousedown', function(e) {
-            if (1 !== e.which) {
-                return;
-            }
-            loop:
-                for (var i = 0; i < pixelNodes.length; i++) {
-                    for (var ii = 0; ii < pixelNodes[i].children.length; ii++) {
-                        if ('span' === pixelNodes[i].children[ii].nodeName.toLowerCase()) {
-                            continue loop;
-                        }
+                break;
+            case 'td':
+                pixel = el;
+                for (var i = 0; i < el.children.length; i++) {
+                    if (el.children[i].hasAttribute('class') && el.children[i].getAttribute('class').match('dot')) {
+                        dot = el.children[i];
+                        break;
                     }
-                    togglePixel(pixelNodes[i]);
                 }
-        });
-        document.getElementById('invertgrid').addEventListener('mousedown', function(e) {
-            if (1 !== e.which) {
-                return;
+                break;
+        }
+        if (undefined === pixel || null === pixel) {
+            alert('Unable to lcoate pixel!');
+            return;
+        }
+        if (!pixel.hasAttribute('data-x')) {
+            alert('Unable to locate "data-x" attribute on <td>!');
+            return;
+        } else {
+            x = parseInt(pixel.getAttribute('data-x'), 10);
+        }
+
+        var parent = pixel.parentNode;
+        while (null !== parent) {
+            if ('tr' === parent.nodeName.toLowerCase() && parent.hasAttribute('data-y')) {
+                row = parent;
+                break;
             }
+        }
+        if (undefined === row || null === row) {
+            alert('Unable to locate row!');
+            return;
+        } else {
+            y = parseInt(row.getAttribute('data-y'), 10);
+        }
+
+        if ('undefined' === typeof hexNodes[y]) {
+            alert('Unable to locate valuenode for ' + y);
+            return;
+        }
+
+        hexNode = hexNodes[y];
+        current = parseInt(hexNode.innerText, 16);
+
+        if (undefined === dot || null === dot) {
+            pixel.appendChild(newDot());
+            updated = (current | (1<<x));
+        } else {
+            pixel.removeChild(dot);
+            updated = (current &=~ (1<<x));
+        }
+        hexNode.firstChild.nodeValue = '0x' + parseInt(updated, 10).toString(16);
+    }
+    document.getElementById('grid').addEventListener('mousedown', function(e) {
+        if (1 !== e.which || !e.target.hasAttribute('class') || (!e.target.getAttribute('class').match('pixel') && !e.target.getAttribute('class').match('dot'))) {
+            return;
+        }
+        togglePixel(e.target);
+    });
+    document.getElementById('cleargrid').addEventListener('mousedown', function(e) {
+        if (1 !== e.which) {
+            return;
+        }
+        loop:
             for (var i = 0; i < pixelNodes.length; i++) {
+                for (var ii = 0; ii < pixelNodes[i].children.length; ii++) {
+                    if ('span' === pixelNodes[i].children[ii].nodeName.toLowerCase()) {
+                        togglePixel(pixelNodes[i]);
+                        continue loop;
+                    }
+                }
+            }
+    });
+    document.getElementById('fillgrid').addEventListener('mousedown', function(e) {
+        if (1 !== e.which) {
+            return;
+        }
+        loop:
+            for (var i = 0; i < pixelNodes.length; i++) {
+                for (var ii = 0; ii < pixelNodes[i].children.length; ii++) {
+                    if ('span' === pixelNodes[i].children[ii].nodeName.toLowerCase()) {
+                        continue loop;
+                    }
+                }
                 togglePixel(pixelNodes[i]);
             }
-        })
-    </script>
+    });
+    document.getElementById('invertgrid').addEventListener('mousedown', function(e) {
+        if (1 !== e.which) {
+            return;
+        }
+        for (var i = 0; i < pixelNodes.length; i++) {
+            togglePixel(pixelNodes[i]);
+        }
+    })
+</script>
 </body>
 </html>
