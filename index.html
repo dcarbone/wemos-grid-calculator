@@ -216,18 +216,18 @@
     }();
     var hexNodes = function() {
         var tr = document.getElementById('hexadecimals');
-        var column = 0;
-        var columns = [];
+        var x = 0;
+        var nodes = [];
         for (var i = 0; i < tr.children.length; i++) {
             if ('td' === tr.children[i].nodeName.toLowerCase() && tr.children[i].hasAttribute('class') && tr.children[i].getAttribute('class').match('hexadecimal')) {
-                columns[column++] = tr.children[i];
+                nodes[x++] = tr.children[i];
             }
         }
-        return columns;
+        return nodes;
     }();
     var binaryNodes = function() {
-        var nodes = [];
         var y = 7;
+        var nodes = [];
         for(var i = 0; i < gridBody.children.length; i++) {
             if ('tr' === gridBody.children[i].nodeName.toLowerCase()) {
                 var tr = gridBody.children[i];
