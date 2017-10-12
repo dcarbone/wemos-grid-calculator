@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8" />
     <title>8x8 grid</title>
     <style rel="tex/css">
         td {
@@ -90,14 +91,14 @@
     </tr>
     <tr data-y="3" class="y">
         <th>3</th>
-        <td data-x="0" class="pixel"></td>
-        <td data-x="1" class="pixel"></td>
-        <td data-x="2" class="pixel"></td>
-        <td data-x="3" class="pixel"></td>
-        <td data-x="4" class="pixel"></td>
-        <td data-x="5" class="pixel"></td>
-        <td data-x="6" class="pixel"></td>
         <td data-x="7" class="pixel"></td>
+        <td data-x="6" class="pixel"></td>
+        <td data-x="5" class="pixel"></td>
+        <td data-x="4" class="pixel"></td>
+        <td data-x="3" class="pixel"></td>
+        <td data-x="2" class="pixel"></td>
+        <td data-x="1" class="pixel"></td>
+        <td data-x="0" class="pixel"></td>
     </tr>
     <tr data-y="2" class="y">
         <th>2</th>
@@ -147,14 +148,14 @@
     <thead>
     <tr>
         <th>&nbsp</th>
-        <th>7</th>
-        <th>6</th>
-        <th>5</th>
-        <th>4</th>
-        <th>3</th>
-        <th>2</th>
-        <th>1</th>
         <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
     </tr>
     </thead>
 </table>
@@ -164,25 +165,31 @@
     <button id="invertgrid">Invert</button>
 </div>
 <script type="text/javascript">
+    var gridTable = document.getElementById('grid');
+    var gridBody, gridHead;
+    for (var i = 0; i < gridTable.children.length; i++) {
+        var node = gridTable.children[i];
+        var name = node.nodeName.toLowerCase();
+        if ('tbody' === name) {
+            gridBody = node;
+        } else if ('thead' === name) {
+            gridHead = node;
+        }
+    }
+    if (undefined === gridBody || null === gridBody) {
+        alert('Unable to locate grid table body, nothing will work.');
+    }
     var pixelNodes = function() {
         var nodes = [];
-        var table = document.getElementById('grid');
-        var tbody, tr, td;
-        var ti, tbi, tri, tdi;
-        for (ti = 0; ti < table.children.length; ti++){
-            if ('tbody' === table.children[ti].nodeName.toLowerCase()) {
-                tbody = table.children[ti];
-                for (tbi = 0; tbi < tbody.children.length; tbi++) {
-                    if ('tr' === tbody.children[tbi].nodeName.toLowerCase()) {
-                        tr = tbody.children[tbi];
-                        for (tri = 0; tri < tr.children.length; tri++) {
-                            if ('td' === tr.children[tri].nodeName.toLowerCase()) {
-                                td = tr.children[tri];
-                                if (td.hasAttribute('class') && td.getAttribute('class').match('pixel')) {
-                                    nodes.push(td);
-                                }
-                            }
-                        }
+        var tr, td;
+        var ti, tbi, tri;
+        for (ti = 0; ti < gridBody.children.length; ti++){
+            tr = gridBody.children[ti];
+            for (tri = 0; tri < tr.children.length; tri++) {
+                if ('td' === tr.children[tri].nodeName.toLowerCase()) {
+                    td = tr.children[tri];
+                    if (td.hasAttribute('class') && td.getAttribute('class').match('pixel')) {
+                        nodes.push(td);
                     }
                 }
             }
@@ -206,11 +213,11 @@
         return dot;
     }
     function togglePixel(el) {
-        var row, pixel, dot, x, y, hexNode, current, updated;
+        var row, pixel, dot, x, y, hexNode, current, updated, parent;
         switch (el.nodeName.toLowerCase()) {
             case 'span':
                 dot = el;
-                var parent = el.parentNode;
+                parent = el.parentNode;
                 while (parent !== null) {
                     if (parent.nodeName.toLowerCase() === 'td' && parent.hasAttribute('data-x')) {
                         pixel = parent;
@@ -239,7 +246,7 @@
             x = parseInt(pixel.getAttribute('data-x'), 10);
         }
 
-        var parent = pixel.parentNode;
+        parent = pixel.parentNode;
         while (null !== parent) {
             if ('tr' === parent.nodeName.toLowerCase() && parent.hasAttribute('data-y')) {
                 row = parent;
