@@ -4,9 +4,14 @@
     <meta charset="UTF-8" />
     <title>8x8 grid</title>
     <style rel="tex/css">
-        td {
-            height: 36px;
-            width: 36px;
+        td.pixel, td.hexadecimal {
+            height: 32px;
+            width: 32px;
+        }
+        td.binary {
+            font-family: monospace;
+            text-align: center;
+            width: 75px;
         }
         td.pixel {
             border-right: 1px solid;
@@ -18,26 +23,26 @@
             border: none;
         }
         tr th:first-child {
-            width: 24px;
+            width: 36px;
         }
         tr.y td:nth-child(2) {
             border-left: 1px solid #ddd;
         }
-        tr.y td:hover {
+        tr.y td.pixel:hover {
             cursor: pointer;
         }
         tr.y:nth-child(8) td.pixel {
             border-bottom: 1px solid #ddd;
         }
-        tr.hexadecimals {
+        #hexadecimals {
             text-align: center;
         }
         span.dot {
             display: block;
-            width: 20px;
-            height: 20px;
-            margin-left: 8px;
-            border-radius: 20px;
+            width: 28px;
+            height: 28px;
+            border-radius: 28px;
+            margin-left: 2px;
             background: #ff0000;
         }
     </style>
@@ -55,6 +60,7 @@
         <td data-x="5" class="pixel"></td>
         <td data-x="6" class="pixel"></td>
         <td data-x="7" class="pixel"></td>
+        <td class="binary">0</td>
     </tr>
     <tr data-y="6" class="y">
         <th>6</th>
@@ -66,6 +72,7 @@
         <td data-x="5" class="pixel"></td>
         <td data-x="6" class="pixel"></td>
         <td data-x="7" class="pixel"></td>
+        <td class="binary">0</td>
     </tr>
     <tr data-y="5" class="y">
         <th>5</th>
@@ -77,6 +84,7 @@
         <td data-x="5" class="pixel"></td>
         <td data-x="6" class="pixel"></td>
         <td data-x="7" class="pixel"></td>
+        <td class="binary">0</td>
     </tr>
     <tr data-y="4" class="y">
         <th>4</th>
@@ -88,6 +96,7 @@
         <td data-x="5" class="pixel"></td>
         <td data-x="6" class="pixel"></td>
         <td data-x="7" class="pixel"></td>
+        <td class="binary">0</td>
     </tr>
     <tr data-y="3" class="y">
         <th>3</th>
@@ -99,6 +108,7 @@
         <td data-x="5" class="pixel"></td>
         <td data-x="6" class="pixel"></td>
         <td data-x="7" class="pixel"></td>
+        <td class="binary">0</td>
     </tr>
     <tr data-y="2" class="y">
         <th>2</th>
@@ -110,6 +120,7 @@
         <td data-x="5" class="pixel"></td>
         <td data-x="6" class="pixel"></td>
         <td data-x="7" class="pixel"></td>
+        <td class="binary">0</td>
     </tr>
     <tr data-y="1" class="y">
         <th>1</th>
@@ -121,6 +132,7 @@
         <td data-x="5" class="pixel"></td>
         <td data-x="6" class="pixel"></td>
         <td data-x="7" class="pixel"></td>
+        <td class="binary">0</td>
     </tr>
     <tr data-y="0" class="y">
         <th>0</th>
@@ -132,9 +144,10 @@
         <td data-x="5" class="pixel"></td>
         <td data-x="6" class="pixel"></td>
         <td data-x="7" class="pixel"></td>
+        <td class="binary">0</td>
     </tr>
     <tr id="hexadecimals">
-        <th></th>
+        <th>hex</th>
         <td class="hexadecimal">0x0</td>
         <td class="hexadecimal">0x0</td>
         <td class="hexadecimal">0x0</td>
@@ -156,6 +169,7 @@
         <th>5</th>
         <th>6</th>
         <th>7</th>
+        <th>binary</th>
     </tr>
     </thead>
 </table>
@@ -165,6 +179,10 @@
     <button id="invertgrid">Invert</button>
 </div>
 <script type="text/javascript">
+    // TODO: more efficient initialization.
+
+    var disBuffer = [0, 0, 0, 0, 0, 0, 0, 0];
+
     var gridTable = document.getElementById('grid');
     var gridBody, gridHead;
     for (var i = 0; i < gridTable.children.length; i++) {
@@ -182,7 +200,7 @@
     var pixelNodes = function() {
         var nodes = [];
         var tr, td;
-        var ti, tbi, tri;
+        var ti, tri;
         for (ti = 0; ti < gridBody.children.length; ti++){
             tr = gridBody.children[ti];
             for (tri = 0; tri < tr.children.length; tri++) {
@@ -207,13 +225,28 @@
         }
         return columns;
     }();
+    var binaryNodes = function() {
+        var nodes = [];
+        var y = 7;
+        for(var i = 0; i < gridBody.children.length; i++) {
+            if ('tr' === gridBody.children[i].nodeName.toLowerCase()) {
+                var tr = gridBody.children[i];
+                for (var ri = 0; ri < tr.children.length; ri++) {
+                    if ('td' === tr.children[ri].nodeName.toLowerCase() && tr.children[ri].hasAttribute('class') && tr.children[ri].getAttribute('class').match('binary')) {
+                        nodes[y--] = tr.children[ri];
+                    }
+                }
+            }
+        }
+        return nodes;
+    }();
     function newDot() {
         var dot = document.createElement('span');
         dot.setAttribute('class', 'dot');
         return dot;
     }
     function togglePixel(el) {
-        var row, pixel, dot, x, y, hexNode, current, updated, parent;
+        var parent, row, pixel, dot, x, y;
         switch (el.nodeName.toLowerCase()) {
             case 'span':
                 dot = el;
@@ -265,17 +298,24 @@
             return;
         }
 
-        hexNode = hexNodes[y];
-        current = parseInt(hexNode.innerText, 16);
-
         if (undefined === dot || null === dot) {
             pixel.appendChild(newDot());
-            updated = (current | (1<<x));
+            disBuffer[y] |= (1<<x);
         } else {
             pixel.removeChild(dot);
-            updated = (current &=~ (1<<x));
+            disBuffer[y] &=~ (1<<x);
         }
-        hexNode.firstChild.nodeValue = '0x' + parseInt(updated, 10).toString(16);
+
+        // TODO: Maybe don't assume first child...?
+        for (i = 0; i < 8; i++) {
+            if (0 === disBuffer[i]) {
+                binaryNodes[i].firstChild.nodeValue = '0';
+                hexNodes[i].firstChild.nodeValue = '0x0';
+            } else {
+                binaryNodes[i].firstChild.nodeValue = disBuffer[i].toString(2);
+                hexNodes[i].firstChild.nodeValue = '0x' + disBuffer[i].toString(16);
+            }
+        }
     }
     document.getElementById('grid').addEventListener('mousedown', function(e) {
         if (1 !== e.which || !e.target.hasAttribute('class') || (!e.target.getAttribute('class').match('pixel') && !e.target.getAttribute('class').match('dot'))) {
